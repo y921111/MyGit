@@ -1,0 +1,74 @@
+//=============================================================
+//Project.txt
+//=============================================================
+//
+//DCS_TYPE define : 0-CS3000,1-DeltaV
+DCS_TYPE 21
+//
+//DEFAULT MODE RUN or CONFIGURE
+STARTMODE CONFIGURE
+//
+//SIM_KEYBOARD COM SELECT :NULL,1-16
+//NULL - No simkeyboard
+//2    - Simkeyboard is pluged at COM2 serial port
+COM NULL
+//
+//
+//DEFAULT SERVER IP ADDRESS
+IP 127.0.0.1
+//
+//DEFAULT PICTURE : DCS系统主窗口
+FIRSTPIC True
+FIRSTPICNAME Tdc_SystemMenu.grf
+//
+//OVERVIEW PICTURE : 总貌
+OVERVIEWPIC False
+OVERVIEWPICNAME 
+//
+//DEFAULT GRAPHIC : 首张流程图
+DEFAULTGRAPHIC True
+DEFAULTGRAPHICNAME US01.grf
+//
+//PICNAME FOR TREND_GROUP
+TREND_GROUP_PICNAME TDC3000_TrendGroup.grf
+//
+//PICNAME FOR CONTROL_GROUP
+CONTROL_GROUP_PICNAME TDC3000_ControlGroup.grf
+//
+//MaxGraphicCount
+MAXGRAPHICCOUNT 3
+//
+//MaxFaceplateCount
+MAXFACEPLATECOUNT 2
+//
+//DEFAULT PIC LOCATION
+PICLEFT 0
+PICTOP 0
+//
+//Permit alarm Horn:  1-yes; 0-No
+PERMIT_HORN 0
+//
+//permit graphic resize in run time;
+//PERMIT_RUNRESIZE 0/1/2/3
+//0 - No resize : 以原始底图尺寸打开，不可缩放
+//1 - Resizible : 以原始底图尺寸打开，可缩放
+//2 - Maximize : 全屏显示，不可缩放
+//3 - Specific Screen size: FIXWIDTH, FIXHEIGHT : 按特定的尺寸显示，不可缩放。FIXWIDTH--特定宽度，FIXHEIGHT--特定高度；
+PERMIT_RUNRESIZE 0
+FIXWIDTH 1360
+FIXHEIGHT 768
+CUTOFF_HEIGHT 30
+//
+//HOT_CURSOR define : Hand, Cross
+HOT_CURSOR  Cross
+//
+//SHOW_HIGHLIGHT_RECT : true or false
+//SHOW_SELECTED_RECT : true or false
+SHOW_HIGHLIGHT_RECT True
+SHOW_SELECTED_RECT False
+//
+//compile the dyn code when save grf : true or false
+//load dll or compile dyn code when grf switch to run:true or false
+COMPILEGRF_WHEN_SAVE False
+DLL_PRIORITY False
+//

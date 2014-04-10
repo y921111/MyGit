@@ -1,0 +1,143 @@
+//2013.03.19/////////////////////////////////////////////////
+
+1.使用下面两行语句可以时代码即时执行，不必等到下一个周期，使得系统不那么慢：
+    DrawArea A = (DrawArea)(Area.Parent);
+             A.RunAnimation();
+             
+2.使用函数AddRefDa可以动态添加图素，使得加载changezong时很方便：
+
+/////////////////////////////////////////////////////////////////////////2013.03.20
+
+  后来经验证，这种方法行不通，因为增加图素是在编辑态下的行为，在运行态之下如果加的话是还没有转到运行态的，
+  致使图素可以随意拖动而且是接收不到所传的参数的。
+  
+  后来改为另一种方法：在每页中还是必须要添加一个图素changezone，在changezone.grf里面加载需要的各种算法的changezone进去，
+  通过传递的参数判断显示哪种算法类型的changezone。现在初步测试的结果是参数传递没问题，问题是之前写的代码通用性不强，
+  得得到上层的上层才能操作，而且现在的问题是TextBox闪烁不可用以及点击CLR后可以关闭但重新打开后只显示了背景图加载的图素没显示，
+  这种现象有可能是通用性不强造成的，接下来先解决这个通用性不强的问题。
+  
+  在CZ_PMPID代码的OnDynInitialize中添加了Area.Enabled = true;在ChangeZone的OnDynInitialize中添加了    
+  if(Area.BReference)
+      {Area.Enabled = true;}
+  在上面的两处添加后使得PMPID在作为图素的图素显示时也是可以操作的。
+  另外点击CLR后可以关闭但重新打开后只显示了背景图加载的图素没显示，这种现象是由于在CLR的文字中也添加了代码，
+  后来删除掉就没问题了。
+  最后的问题就是TextBox闪烁的问题了。
+  
+  //////////////////////////////////////////////////////////////////////////2013.03.20
+  
+  使用函数GetTagFaceplate可以点击tagname直接在指定位置打开changezone：           
+         /// <summary>
+        /// 添加图素
+        /// add by lyy,20130319
+        /// </summary>
+        /// <param name="drawArea">主DrawArea对象</param>
+        /// <param name="FileName">图素对应的文件名（带.grf后缀）</param>
+        /// <param name="RefDaName">图素名</param>
+        /// <param name="nTop">位置-Top</param>
+        /// <param name="nLeft">位置-Left</param>
+        /// <param name="nWidth">尺寸-宽度，如果宽度和高度中的一项为零，则添加的图素的尺寸为原始尺寸</param>
+        /// <param name="nHeight">尺寸-高度</param>
+        /// <returns></returns>
+        static public bool AddRefDa(DrawArea drawArea, string strFileName, string RefDaName, int nTop, int nLeft, int nWidth, int nHeight)
+
+       
+          /// <summary>
+        /// 已知TagName，得到其对应的Faceplate的文件名
+        /// 20130319,lyy,add;
+        /// </summary>
+        /// <param name="Tagname"></param>
+        /// <returns></returns>
+        static public string GetTagFaceplate(string Tagname)
+
+3.对于两张grf之间的传值问题说明：
+
+  A：点击动作先使用函数CommonFunction._ProjectRelated.Var[0]往projectPropertyDef的Var1传值;
+  B：接收完之后使用CommonFunction._ProjectRelated.Var[0]=0清空；在清空之前使不需要的字符串隐藏；
+      if(Text1.Variable[0] != Text1.Variable[1])
+      
+      {
+          DrawText Text2 = (DrawText)Area.GetDrawObj("Text2");
+          Text2.Caption = "";
+       }
+    Text1.Variable[1] = Text1.Variable[0]; 
+
+    CommonFunction._ProjectRelated.Var[0] = "";
+    
+  上面这段代码先比较新旧值是否相同，然后使字符串隐藏。
+  
+/////////////////////////////////////////////////////////////////////////2012.03.21
+
+/////////////////////////////////////////////////////////////////////////2012.05.07与Top的通信
+
+TDC3000的Top通信：通过CommonFunction._ProjectRelated.Var[0]和CommonFunction._ProjectRelated.Var[1]传递，
+
+在Top中判断送给CommonFunction._ProjectRelated.Var[0]和CommonFunction._ProjectRelated.Var[1]的字符串来进行显示或操作。
+
+原来是PMPID直接送值给Top中的Variable[3]和Variable[4]，现在是直接送给CommonFunction._ProjectRelated.Var[0]和CommonFunction._ProjectRelated.Var[1]。
+
+便于管理和维护。
+
+/////////////////////////////////////////////////////////////////////////2012.05.07与Top的通信
+
+
+4.对于2中当接收到TagName后需要在ChangeZone.grf中判断点的算法，然后显示相应的changzone内容，
+
+这个可以使用后来新加的函数CommonFunction.GetTagFaceplate(string Tagname)，得到的是grf文件名，
+
+得到后在进行判断显示相应的changezone内容，其余的都是隐藏的。
+   
+/////////////////////////////////////////////////////////////////////////2012.03.21
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

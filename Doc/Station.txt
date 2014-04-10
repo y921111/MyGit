@@ -1,0 +1,10 @@
+Station Name = "163"
+Station No = 163
+Static Address = "TRUE"
+Instructor = "192.168.57.163"
+Instructor Host = "HaoDongDong"
+Position = "TRUE"
+Row = "1"
+Col = "4"
+Station Mode = "MASTER"
+Exit Enable = TRUE
